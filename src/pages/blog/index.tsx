@@ -1,15 +1,12 @@
-import {Link } from "react-router-dom";
+import { Navbar } from "../../components/organisms/Navbar";
 
 const blog = () => {
 	return (
-		<div>
-			<h1>Blog</h1>
-			<p>Blog page content</p>
-            <Link to="/">
-				<button>Click me</button>
-			</Link>
-		</div>
-	);
+        <div>
+            <Navbar />
+            <h1>jalan</h1>
+        </div>
+    );
 };
 
 export default blog;
