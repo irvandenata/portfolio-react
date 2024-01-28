@@ -4,7 +4,7 @@ const blog = () => {
 	return (
         <div>
             <Navbar />
-            <h1>jalan</h1>
+            <h1 className="text-red">Blog</h1>
         </div>
     );
 };

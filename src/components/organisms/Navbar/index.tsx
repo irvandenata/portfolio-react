@@ -1,24 +1,37 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 export const Navbar = () => {
+	const [menuOpen, setMenuOpen] = useState(false);
+	function toggleMenu() {
+		if (menuOpen) {
+			setMenuOpen(false);
+		} else {
+			setMenuOpen(true);
+		}
+	}
 	return (
+        <>
 		<div className="snap-y container-fluid relative">
-			<div id="navigation" className="top-0 z-9 shadow w-full bg-white">
+			<div className="top-0 z-9 shadow w-full bg-white">
 				<header className="bg-white container  mx-auto ">
 					<nav
 						className="flex lg:px-0 items-center justify-between py-6"
 						aria-label="Global"
 					>
 						<div className="flex lg:flex-1">
-							<a
-								href="/"
-								className="-m-1.5 p-1.5 hover:bg-primary hover:text-white hover:animate-bounce hover:rounded hover:scale-100 "
+							<Link
+								to="/"
+								className="-m-1.5 p-1.5 hover:bg-primary hover:text-white hover:rounded "
 							>
 								<span className="font-bold text-2xl">IVD.</span>
-							</a>
+							</Link>
 						</div>
 						<div className="flex lg:hidden">
 							<button
 								type="button"
 								id="menu-button-mobile"
+								onClick={toggleMenu}
 								className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
 							>
 								<span className="sr-only">Open main menu</span>
@@ -26,47 +39,49 @@ export const Navbar = () => {
 									className="h-6 w-6"
 									fill="none"
 									viewBox="0 0 24 24"
-									stroke-width="1.5"
+									strokeWidth="1.5"
 									stroke="currentColor"
-									aria-hidden="true"
+									
 								>
 									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 										d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
 									/>
 								</svg>
 							</button>
 						</div>
 						<div className="hidden lg:flex lg:gap-x-12">
-							<a className="text-sm font-light px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
+							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
 								About Me
 							</a>
-							<a className="text-sm font-light px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
+							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
 								Tech Stack
 							</a>
-							<a className="text-sm font-light px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
+							<a className="text-sm font-light cursor-pointer  px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
 								Work Experieces
 							</a>
-							<a className="text-sm font-light px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
+							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
 								Projects
 							</a>
 
-							<a
-								href="{{ route('blog.search') }}"
-								className="text-sm font-light px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1"
+							<Link
+								to="/blog"
+								className="text-sm font-light px-1 cursor-pointer leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1"
 							>
 								My Blog
-							</a>
+							</Link>
 						</div>
 						<div className="hidden lg:flex lg:flex-1 lg:justify-end">
 							<a className="text-sm font-semibold px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
-								Get In Touch<span aria-hidden="true">&rarr;</span>
+								Get In Touch<span >&rarr;</span>
 							</a>
 						</div>
 					</nav>
 					<div
-						className="hidden mobile-menu transition ease-in-out delay-150 duration-300"
+						className={`${
+							menuOpen ? "opacity-100" : "opacity-0 z-[-100] absolute"
+						}  mobile-menu lg:hidden md:hidden transition-all duration-200 delay-75 ease-in-out`}
 						role="dialog"
 						aria-modal="false"
 					>
@@ -82,6 +97,7 @@ export const Navbar = () => {
 								<button
 									type="button"
 									id="exit-menu-mobile"
+									onClick={toggleMenu}
 									className="-m-2.5 rounded-md p-2.5 text-gray-700"
 								>
 									<span className="sr-only">Close menu</span>
@@ -89,13 +105,13 @@ export const Navbar = () => {
 										className="h-6 w-6"
 										fill="none"
 										viewBox="0 0 24 24"
-										stroke-width="1.5"
+										strokeWidth="1.5"
 										stroke="currentColor"
-										aria-hidden="true"
+										
 									>
 										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
+											strokeLinecap="round"
+											strokeLinejoin="round"
 											d="M6 18L18 6M6 6l12 12"
 										/>
 									</svg>
@@ -132,5 +148,6 @@ export const Navbar = () => {
 				</header>
 			</div>
 		</div>
+        </>
 	);
 };
