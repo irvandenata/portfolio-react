@@ -4,8 +4,7 @@ export const Header = () => {
 	return (
 		<>
 			<div
-				id="about-me"
-				className="snap-madatory snap-center mx-auto container min-h-screen flex lg:flex-row flex-col lg:pt-0 sm:pt-32 lg:items-center "
+				className="snap-center snap-always mx-auto container min-h-screen flex lg:flex-row flex-col lg:pt-0 sm:pt-32 lg:items-center "
 			>
 				<div className="lg:basis-1/2 flex justify-center">
 					<img

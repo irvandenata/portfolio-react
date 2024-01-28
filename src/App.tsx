@@ -1,7 +1,8 @@
 import {Routes, Route} from 'react-router-dom'
 import './App.css'
 import Home from './pages/home';
-import Blog from './pages/blog';
+import {DetailArticle} from './pages/blog/detail-article';
+import {SearchArticle} from './pages/blog/search-article';
 
 const App = ()=> {
 
@@ -9,7 +10,8 @@ const App = ()=> {
         <>
             <Routes>
                 <Route index  element={<Home />}  />
-                <Route path="/blog" element={<Blog />} /> 
+                <Route path="/blog" element={<SearchArticle />} /> 
+                <Route path="/detail" element={<DetailArticle />} />
             </Routes>
         </>
   )

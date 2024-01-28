@@ -3,7 +3,7 @@ import { onMouseEnter, onMouseLeave } from "../../../functions/mouseHandler";
 export const TechStack = () => {
 	return (
 		<div
-			className="snap-madatory snap-center container min-h-screen mx-auto  flex items-center sm:pt-32"
+			className=" snap-center snap-alaways container min-h-screen mx-auto  flex items-center sm:py-16"
 			id="tech-stack"
 		>
 			<div className="lg:flex w-full">

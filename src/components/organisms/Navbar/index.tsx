@@ -12,8 +12,8 @@ export const Navbar = () => {
 	}
 	return (
         <>
-		<div className="snap-y container-fluid relative">
-			<div className="top-0 z-9 shadow w-full bg-white">
+		<div className="container-fluid relative">
+			<div className="fixed top-0 z-9 shadow w-full bg-white">
 				<header className="bg-white container  mx-auto ">
 					<nav
 						className="flex lg:px-0 items-center justify-between py-6"
