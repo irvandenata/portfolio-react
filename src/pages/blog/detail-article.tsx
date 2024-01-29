@@ -1,7 +1,8 @@
+import {Transition} from "../../components/atoms/transition";
 import { Footer } from "../../components/organisms/Footer";
 import { Navbar } from "../../components/organisms/Navbar";
 
-export const DetailArticle = () => {
+const DetailArticle = () => {
 	return (
 		<>
 			<Navbar />
@@ -43,9 +44,9 @@ export const DetailArticle = () => {
 									>
 										<path
 											stroke="currentColor"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth="2"
 											d="m1 9 4-4-4-4"
 										/>
 									</svg>
@@ -68,9 +69,9 @@ export const DetailArticle = () => {
 									>
 										<path
 											stroke="currentColor"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth="2"
 											d="m1 9 4-4-4-4"
 										/>
 									</svg>
@@ -107,3 +108,5 @@ export const DetailArticle = () => {
 		</>
 	);
 };
+
+export default Transition(DetailArticle);
