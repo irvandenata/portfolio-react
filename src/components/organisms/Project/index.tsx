@@ -34,7 +34,7 @@ export const Project = () => {
 				</div>
 				<div className="flex">
 					<div className="grid lg:grid-cols-4 sm:grid-cols-1 gap-y-10 gap-x-6 mt-10 w-full">
-						<div className="max-w-sm bg-background border-2 border-gray rounded-lg hover:border-primary shadow dark:bg-gray-800 dark:border-gray-700 text-left z-[5] h-[350px] relative">
+						<div className="max-w-sm bg-background border-2 border-gray rounded-lg hover:border-primary shadow dark:bg-gray-800 dark:border-gray-700 text-left z-[1] h-[350px] relative">
 							<Link to="/detail" className="">
 								<img
 									className="rounded-lg p-1"

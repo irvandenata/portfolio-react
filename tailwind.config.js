@@ -12,12 +12,12 @@ export default {
             'lg': '1024px',
             'xl': '1280px',
         },
-        // fontSize: {
-        //     '4xl': '2.25rem',
-        //     '3xl': '1.875rem',
-        //     '2xl': '1.5rem',
-        //     'xl': '1.25rem',
-        // },
+        fontSize: {
+            '4xl': '2.25rem',
+            '3xl': '1.875rem',
+            '2xl': '1.5rem',
+            'xl': '1.25rem',
+        },
 
 
         colors: {
