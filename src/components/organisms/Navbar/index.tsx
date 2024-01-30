@@ -52,28 +52,28 @@ export const Navbar = () => {
 							</button>
 						</div>
 						<div className="hidden lg:flex lg:gap-x-12">
-							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
+							<Link to="/detail" className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
 								About Me
-							</a>
-							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
+							</Link>
+							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
 								Tech Stack
 							</a>
-							<a className="text-sm font-light cursor-pointer  px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
+							<a className="text-sm font-light cursor-pointer  px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
 								Work Experieces
 							</a>
-							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
+							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
 								Projects
 							</a>
 
 							<Link
 								to="/blog"
-								className="text-sm font-light px-1 cursor-pointer leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1"
+								className="text-sm font-light px-1 cursor-pointer leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1"
 							>
 								My Blog
 							</Link>
 						</div>
 						<div className="hidden lg:flex lg:flex-1 lg:justify-end">
-							<a className="text-sm font-semibold px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:animate-bounce hover:px-1">
+							<a className="text-sm font-semibold px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
 								Get In Touch<span >&rarr;</span>
 							</a>
 						</div>
@@ -90,7 +90,7 @@ export const Navbar = () => {
 							<div className="flex items-center justify-between">
 								<a
 									href="/"
-									className="-m-1.5 p-1.5 hover:bg-primary hover:text-white hover:animate-bounce hover:rounded hover:scale-100 "
+									className="-m-1.5 p-1.5 hover:bg-primary hover:text-white hover:scale-110 hover:rounded hover:scale-100 "
 								>
 									<span className="font-bold text-2xl">IVD.</span>
 								</a>
@@ -120,9 +120,9 @@ export const Navbar = () => {
 							<div className="mt-6 flow-root">
 								<div className="-my-6 divide-y divide-gray-500/10">
 									<div className="space-y-2 py-6">
-										<a className="-mx-3 block rounded-lg px-3 py-2 text-base font-light leading-7 text-gray-900 hover:bg-gray-50">
+										<Link to="/detail" className="-mx-3 block rounded-lg px-3 py-2 text-base font-light leading-7 text-gray-900 hover:bg-gray-50">
 											About Me
-										</a>
+										</Link>
 										<a className="-mx-3 block rounded-lg px-3 py-2 text-base font-light leading-7 text-gray-900 hover:bg-gray-50">
 											Tech Stack
 										</a>
