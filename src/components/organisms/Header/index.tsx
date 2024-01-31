@@ -1,6 +1,22 @@
+import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import {onMouseEnter, onMouseLeave} from '../../../functions/mouseHandler';
+import { getHeader } from '../../../services/home';
 export const Header = () => {
-	
+  const [header, setHeader] = useState(null);
+  const IMG_API = import.meta.env.VITE_PUBLIC_IMG;
+	const getHeaderAPI = useCallback(async () => {
+        const response = await getHeader();
+        if (response.error) {
+          toast.error(response.message);
+        } else {
+          setHeader(response.data.data);
+        }
+        console.log(header);
+      }, []);
+      useEffect(() => {
+        getHeaderAPI();
+      }, []);
 	return (
 		<>
 			<div
@@ -8,13 +24,13 @@ export const Header = () => {
 			>
 				<div className="lg:basis-1/2 flex justify-center">
 					<img
-						src="/public/img/profile.webp"
+						src={header?IMG_API +'/'+ header?.image_profile : ''}
 						className="w-4/6 rounded-full"
 						alt=""
 					/>
 				</div>
 				<div className="lg:basis-1/2 lg:pt-0 pt-10 text-left">
-					<h1 className="lg:text-4xl text-xl font-bold mb-4">
+					<h1 className="lg:text-4xl text-xl font-bold">
 						Hi There,
 						<br />
 						<span className="green_gradient text-center">
@@ -25,11 +41,7 @@ export const Header = () => {
 						<br />
 					</h1>
 					<div className="body-about">
-						I am a Fullstack Engineer with 3 years of experience, hailing from
-						Pontianak, West Kalimantan, Indonesia. I am committed to delivering
-						high-quality and innovative solutions in the realm of mobile
-						application development. Feel free to reach out to me if you'd like
-						to discuss further or collaborate on a project.
+                    <div dangerouslySetInnerHTML={{ __html: header?.description }}></div>
 					</div>
 
 					<div className="flex gap-6 mt-5 static">
