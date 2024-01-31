@@ -1,9 +1,41 @@
+import { useCallback, useEffect, useState } from "react";
 import { onMouseEnter, onMouseLeave } from "../../../functions/mouseHandler";
+import { getExperiences, getTechStacks } from "../../../services/home";
+import { toast } from "react-toastify";
+import TechStack  from "../../molecules/TechStack";
+export const MySkill = () => {  
+	const [experiences, setExperiences] = useState([]);
+	const [techStacks, setTechStack] = useState([]);
+	const getExperiencesAPI = useCallback(async () => {
+		const response = await getExperiences();
+		if (response.error) {
+			toast.error(response.message);
+		} else {
+			setExperiences(response.data.data);
+		}
+	}, []);
+	const getTechStackAPI = useCallback(async () => {
+		const response = await getTechStacks();
+		if (response.error) {
+			toast.error(response.message);
+		} else {
+			setTechStack(response.data.data);
+		}
+	}, []);
+	useEffect(() => {
+		getExperiencesAPI();
+		getTechStackAPI();
+       
+	}, []);
 
-export const TechStack = () => {
+    useEffect(() => {
+        console.log(experiences);
+        console.log(techStacks);
+    }, [experiences, techStacks]);
+
 	return (
 		<div
-			className=" snap-center snap-alaways container min-h-screen mx-auto  flex items-center sm:py-16"
+			className="snap-center snap-alaways container min-h-screen mx-auto  flex items-center sm:py-16"
 			id="tech-stack"
 		>
 			<div className="lg:flex w-full">
@@ -49,52 +81,7 @@ export const TechStack = () => {
 						<div className="mt-10">
 							<h2 className="text-lg">Frontend</h2>
 							<div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-4 gap-5 md:gap-3 mt-4">
-								<div
-									onMouseEnter={onMouseEnter}
-									onMouseLeave={onMouseLeave}
-									id="title-1"
-									className="  flex-row justify-center static"
-								>
-									<div className="icon-stack p-2 bg-background rounded-lg hover:border-primary hover:border-2 border-2 border-background cursor-pointer flex items-center justify-center">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											x="0px"
-											y="0px"
-											width="60"
-											height="60"
-											viewBox="0 0 48 48"
-										>
-											{" "}
-											<polygon
-												fill="#40c4ff"
-												points="26,4 6,24 12,30 38,4"
-											></polygon>
-											<polygon
-												fill="#40c4ff"
-												points="38,22 27,33 21,27 26,22"
-											></polygon>
-											<rect
-												width="8.485"
-												height="8.485"
-												x="16.757"
-												y="28.757"
-												fill="#03a9f4"
-												transform="rotate(-45.001 21 33)"
-											></rect>
-											<polygon
-												fill="#01579b"
-												points="38,44 26,44 21,39 27,33"
-											></polygon>
-											<polygon
-												fill="#084994"
-												points="21,39 30,36 27,33"
-											></polygon>{" "}
-										</svg>
-									</div>
-									<p className="icon-caption border border-gray text-sm absolute invisible  font-thin text-center mt-2 bg-background p-1 rounded">
-										Flutter
-									</p>
-								</div>
+                                {techStacks.map((techStack)=>{return <TechStack key={techStack.id} id={techStack.id} title={techStack.title} icon={techStack.icon} />})}
 							</div>
 						</div>
 						<div className="mt-16">

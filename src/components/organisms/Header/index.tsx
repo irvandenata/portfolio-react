@@ -12,7 +12,6 @@ export const Header = () => {
         } else {
           setHeader(response.data.data);
         }
-        console.log(header);
       }, []);
       useEffect(() => {
         getHeaderAPI();

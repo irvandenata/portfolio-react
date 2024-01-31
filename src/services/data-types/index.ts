@@ -3,6 +3,17 @@ export interface Projects {
     name: string;
 }
 
+export interface Header {
+    description: string;
+    image_profile: string;
+}
+
+
+export interface WorkExpProps {
+    title: string;
+}
+
+
 // export interface GameItemTypes {
 //     _id: string;
 //     status: string;

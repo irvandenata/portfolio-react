@@ -2,6 +2,7 @@
 
 export const onMouseEnter = (e: any) => {
     const parentId = e.currentTarget!.id
+    console.log(parentId)
     const caption = document.querySelector('#' + parentId + ' .icon-caption')
     caption!.classList.remove('invisible')
 };

@@ -1,6 +1,6 @@
 import { Navbar } from "../../components/organisms/Navbar";
 import { Header } from "../../components/organisms/Header";
-import { TechStack } from "../../components/organisms/TechStack";
+import { MySkill } from "../../components/organisms/MySkill";
 import { Project } from "../../components/organisms/Project";
 import { GetInTouch } from "../../components/organisms/GetInTouch";
 import { Footer } from "../../components/organisms/Footer";
@@ -11,7 +11,7 @@ const Home = () => {
 		<div className="w-full ">
             <Navbar  />
             <Header />
-            <TechStack />
+            <MySkill />
             <Project />
             <GetInTouch />
             <Footer/>
