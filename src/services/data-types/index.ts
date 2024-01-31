@@ -11,6 +11,10 @@ export interface Header {
 
 export interface WorkExpProps {
     title: string;
+    subTitle: string;
+    description: string;
+    startDate: string;
+    endDate: string;
 }
 
 
