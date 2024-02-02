@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export const Transition = (OgComponent: any) => {
+export default function Transition (OgComponent: any) {
 	const text: string = "Loading...";
 	return () => (
 		<>
@@ -78,4 +78,4 @@ export const Transition = (OgComponent: any) => {
 			</motion.div>
 		</>
 	);
-};
+}

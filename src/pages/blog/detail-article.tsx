@@ -1,4 +1,4 @@
-import {Transition} from "../../components/atoms/transition";
+import {Transition} from "../../components/molecules/Transition";
 import { Footer } from "../../components/organisms/Footer";
 import { Navbar } from "../../components/organisms/Navbar";
 
