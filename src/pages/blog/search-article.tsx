@@ -2,6 +2,7 @@ import { Footer } from "../../components/organisms/Footer";
 import { Navbar } from "../../components/organisms/Navbar";
 
 export const SearchArticle = () => {
+    
 	return (
 		<>
 			<Navbar />
