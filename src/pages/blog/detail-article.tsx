@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import Transition from "../../components/molecules/Transition";
 import { Footer } from "../../components/organisms/Footer";
 import { Navbar } from "../../components/organisms/Navbar";
