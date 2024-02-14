@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { onMouseEnter, onMouseLeave } from "../../../functions/mouseHandler";
 import { getExperiences, getTechStacks } from "../../../services/home";
 import { toast } from "react-toastify";
 import TechStack from "../../molecules/TechStack";
 import WorkExperience from "../../molecules/WorkExperience";
+import { WorkExpItem } from "../../../services/data-types";
+import { convertSnakeToCamel } from "../../../functions/convert";
 export const MySkill = () => {
 	const [experiences, setExperiences] = useState([]);
 	const [techStacks, setTechStack] = useState([]);
@@ -20,22 +21,21 @@ export const MySkill = () => {
 		if (response.error) {
 			toast.error(response.message);
 		} else {
-			setTechStack(response.data.data);
+           const result =  convertSnakeToCamel(response.data.data);
+			setTechStack(result);
 		}
 	}, []);
+
+
 	useEffect(() => {
 		getExperiencesAPI();
 		getTechStackAPI();
 	}, []);
 
-	useEffect(() => {
-		console.log(experiences);
-		console.log(techStacks);
-	}, [experiences, techStacks]);
 
 	return (
 		<div
-			className="snap-center snap-alaways container min-h-screen mx-auto  flex items-center sm:py-16"
+			className="snap-start container min-h-screen mx-auto lg:pt-[100px]  flex items-center sm:py-16"
 			id="tech-stack"
 		>
 			<div className="lg:flex w-full">
@@ -45,15 +45,15 @@ export const MySkill = () => {
 					</h1>
 					<div className="flex-row mt-10">
 						<ol className="relative -z-10 border-s border-background dark:border-gray-700">
-                            {experiences.map((experience) => {
+                            {experiences.map((experience: WorkExpItem) => {
                                 return (
                                     <WorkExperience
                                         key={experience.id}
                                         title={experience.title}
-                                        subTitle={experience.sub_title}
+                                        subTitle={experience.subTitle}
                                         description={experience.description}
-                                        startDate={experience.start_date}
-                                        endDate={experience.end_date}
+                                        startDate={experience.startDate}
+                                        endDate={experience.endDate}
                                     />
                                 );
                             })}
@@ -68,8 +68,8 @@ export const MySkill = () => {
 						<div className="mt-10">
 							<h2 className="text-lg">Frontend</h2>
 							<div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-4 gap-5 md:gap-3 mt-4">
-								{techStacks.map((techStack) => {
-									if (techStack.sub_title === "Frontend") {
+								{techStacks.map((techStack : WorkExpItem) => {
+									if (techStack.subTitle === "Frontend") {
 										return (
 											<TechStack
 												key={techStack.id}
@@ -87,8 +87,8 @@ export const MySkill = () => {
 						<div className="mt-16">
 							<h2 className="text-lg">Backend</h2>
 							<div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-4 gap-5 md:gap-3 mt-4">
-								{techStacks.map((techStack) => {
-									if (techStack.sub_title === "Backend") {
+								{techStacks.map((techStack:WorkExpItem) => {
+									if (techStack.subTitle === "Backend") {
 										return (
 											<TechStack
 												key={techStack.id}
@@ -106,8 +106,8 @@ export const MySkill = () => {
 						<div className="mt-16">
 							<h2 className="text-lg">Others</h2>
 							<div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-4 gap-5 md:gap-3 mt-4">
-								{techStacks.map((techStack) => {
-									if (techStack.sub_title === "Others") {
+								{techStacks.map((techStack: WorkExpItem) => {
+									if (techStack.subTitle === "Others") {
 										return (
 											<TechStack
 												key={techStack.id}
