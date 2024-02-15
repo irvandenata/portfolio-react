@@ -45,6 +45,15 @@ export async function getHeader() {
     });
   }
 
+  export async function getArticleBySlug(slug :string ) {
+    const url = `${ROOT_API}/${API_VERSION}/show/${slug}`;
+    return callAPI({
+      url,
+      method: 'GET',
+      token: true,
+    });
+  }
+
 
 // export async function getHeader(valueParams: string) {
 //     let params = '';

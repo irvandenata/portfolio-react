@@ -39,6 +39,25 @@ export interface ArticleCard {
 	title: string;
 }
 
+
+export interface ArticleDetail{
+    "id":number,
+    "title": string,
+    "slug": string,
+    "image": string,
+    "source": string,
+    "body": string,
+    "categoryId":number,
+    "status": number,
+    "createdAt": string,
+    "category": {
+        "id": number,
+        "name": string,
+        "slug": string,
+        "status": number,
+    }
+}
+
 // export interface GameItemTypes {
 //     _id: string;
 //     status: string;

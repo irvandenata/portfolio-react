@@ -13,7 +13,7 @@ const App = ()=> {
             <Routes>
                 <Route index  element={<Home />}  />
                 <Route path="/blog" element={<SearchArticle />} /> 
-                <Route path="/detail" element={<DetailArticle />} />
+                <Route path="/blog/:slug" element={<DetailArticle />} />
             </Routes>
         </AnimatePresence>
         </>

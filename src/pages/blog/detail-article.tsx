@@ -1,10 +1,39 @@
 /* eslint-disable react-refresh/only-export-components */
+import { useParams } from "react-router-dom";
 import Transition from "../../components/molecules/Transition";
 import { Footer } from "../../components/organisms/Footer";
 import { Navbar } from "../../components/organisms/Navbar";
+import { useCallback, useEffect, useState } from "react";
+import { genereateImageUrl, getArticleBySlug } from "../../services/home";
+import { toast } from "react-toastify";
+import { convertSnakeToCamel } from "../../functions/convert";
+import { ArticleDetail } from "../../services/data-types";
 
 const DetailArticle = () => {
-	return (
+    const {slug} = useParams();
+    const [article, setArticle] = useState<ArticleDetail>();
+    const getArticleBySlugAPI = useCallback(async (slug:string) => {
+        const response = await getArticleBySlug(slug);
+        if (response.error) {
+           toast.error(response.message);
+        }else {
+
+            const result = convertSnakeToCamel(response.data.data);
+            console.log(result);
+            setArticle(result);
+        }
+    }
+    , [slug]);
+
+    useEffect(() => {
+        if(slug)
+        getArticleBySlugAPI(slug);
+        else
+        //redirect to 404
+        console.log('redirect to 404');
+    }
+    , []);
+	return article?(
 		<>
 			<Navbar />
 			<div
@@ -19,7 +48,6 @@ const DetailArticle = () => {
 						<ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
 							<li className="inline-flex items-center">
 								<a
-									href="/"
 									className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary dark:text-gray-400 dark:hover:text-white"
 								>
 									<svg
@@ -87,7 +115,7 @@ const DetailArticle = () => {
 				<div className="w-full mt-5 ">
 					<img
 						className="rounded-[1rem] p-1 w-screen max-h-screen object-cover"
-						src="https://picsum.photos/id/237/200/300"
+						src={article!.image?genereateImageUrl(article!.image):''}
 						alt="Article"
 					/>
 				</div>
@@ -107,7 +135,7 @@ const DetailArticle = () => {
 			</div>
 			<Footer />
 		</>
-	);
+	):<div>Loading</div>;
 };
 
 export default Transition(DetailArticle);
