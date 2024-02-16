@@ -135,7 +135,7 @@ const DetailArticle = () => {
 			</div>
 			<Footer />
 		</>
-	):<div>Loading</div>;
+	):<div></div>;
 };
 
 export default Transition(DetailArticle);
