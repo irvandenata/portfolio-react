@@ -1,18 +1,45 @@
+import { useCallback, useEffect, useState } from "react";
+import Transition from "../../components/molecules/Transition";
 import { Footer } from "../../components/organisms/Footer";
 import { Navbar } from "../../components/organisms/Navbar";
+import { ArticleItemInterface } from "../../services/data-types";
+import { getArticles, getLatestProjects } from "../../services/home";
+import { toast } from "react-toastify";
 
-export const SearchArticle = () => {
-    
+const SearchArticle = () => {
+	const urlSearchString = window.location.search;
+	const params = new URLSearchParams(urlSearchString);
+	const [article, setArticle] = useState<ArticleItemInterface[]>([]);
+	const [pagination, setPagination] = useState({
+        currentPage: 1,
+        totalPage: 1,
+    });
+	const getArticlesAPI = useCallback(async () => {
+		const category = params.get("category") ? params.get("category") : "";
+		let response;
+		if (category == "project") {
+			response = await getLatestProjects();
+		} else {
+			response = await getArticles(category!);
+		}
+		if (response.error) {
+			toast.error(response.message);
+		} else {
+			setArticle(response.data);
+		}
+	}, []);
+
+	useEffect(() => {
+		getArticlesAPI();
+	}, []);
+
 	return (
 		<>
 			<Navbar />
 			<div>
 				<div className=" snap-none container min-h-screen mx-auto justify-center items-center">
 					<div className="w-full">
-						<form
-							className="static mt-32"
-							action="/"
-						>
+						<form className="static mt-32" action="/">
 							<label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray">
 								Search
 							</label>
@@ -153,3 +180,5 @@ export const SearchArticle = () => {
 		</>
 	);
 };
+
+export default Transition(SearchArticle);

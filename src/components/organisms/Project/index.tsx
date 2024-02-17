@@ -1,21 +1,18 @@
 import { Link } from "react-router-dom";
-import { ArticleItem } from "../../../services/data-types";
+import {ArticleItemInterface } from "../../../services/data-types";
 import { useEffect, useState } from "react";
 import { getLatestProjects } from "../../../services/home";
-import { convertSnakeToCamel } from "../../../functions/convert";
 import { toast } from "react-toastify";
 import ArticleCard from "../../molecules/ArticleCard";
 
 export const Project = () => {
-	const [projects, setProjects] = useState<ArticleItem[]>([]);
+	const [projects, setProjects] = useState<ArticleItemInterface[]>([]);
 	const getLatestProjectsAPI = async () => {
 		const response = await getLatestProjects();
-		const result = convertSnakeToCamel(response.data.data.data);
-		console.log(result);
 		if (response.error) {
 			toast.error(response.message);
 		} else {
-			setProjects(result);
+			setProjects(response.data);
 		}
 	};
 	useEffect(() => {
@@ -53,7 +50,7 @@ export const Project = () => {
 				</div>
 				<div className="flex">
 					<div className="grid lg:grid-cols-4 sm:grid-cols-1 gap-y-10 gap-x-6 mt-10 w-full">
-						{projects.map((project: ArticleItem) => {
+						{projects.map((project: ArticleItemInterface) => {
 							return (
 								<ArticleCard
 									key={project.id}

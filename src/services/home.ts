@@ -1,4 +1,5 @@
 import callAPI from "../config/api";
+import { convertSnakeToCamel } from "../functions/convert";
 
 const ROOT_API = import.meta.env.VITE_PUBLIC_API;
 const API_VERSION = 'api';
@@ -10,11 +11,12 @@ export const genereateImageUrl = (url: string) => {
 
 export async function getHeader() {
     const url = `${ROOT_API}/${API_VERSION}/get-header`;
-    return callAPI({
+    const response = await callAPI({
       url,
       method: 'GET',
       token: true,
     });
+    return convertSnakeToCamel(response.data);
   }
 
 
@@ -38,11 +40,25 @@ export async function getHeader() {
 
   export async function getLatestProjects() {
     const url = `${ROOT_API}/${API_VERSION}/get-projects`;
-    return callAPI({
-      url,
-      method: 'GET',
-      token: true,
-    });
+    const response = await callAPI({
+        url,
+        method: 'GET',
+        token: true,
+      });
+      return convertSnakeToCamel(response.data.data);
+  }
+
+  export async function getArticles(
+
+    category:string ='',) {
+    const categoryUrl = category ? `category=${category}` : '';
+    const url = `${ROOT_API}/${API_VERSION}/get-articles?${categoryUrl}`;
+    const response = await callAPI({
+        url,
+        method: 'GET',
+        token: true,
+      });
+      return convertSnakeToCamel(response.data);
   }
 
   export async function getArticleBySlug(slug :string ) {

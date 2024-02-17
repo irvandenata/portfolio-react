@@ -2,15 +2,19 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import {onMouseEnter, onMouseLeave} from '../../../functions/mouseHandler';
 import { getHeader } from '../../../services/home';
+import { HeaderInterface } from '../../../services/data-types';
 export const Header = () => {
-  const [header, setHeader] = useState(null);
+  const [header, setHeader] = useState<HeaderInterface>({
+    imageProfile: '',
+    description: '',
+  });
   const IMG_API = import.meta.env.VITE_PUBLIC_IMG;
 	const getHeaderAPI = useCallback(async () => {
         const response = await getHeader();
         if (response.error) {
           toast.error(response.message);
         } else {
-          setHeader(response.data.data);
+          setHeader(response.data);
         }
       }, []);
       useEffect(() => {
@@ -23,7 +27,7 @@ export const Header = () => {
 			>
 				<div className="lg:basis-1/2 flex justify-center">
 					<img
-						src={header?IMG_API +'/'+ header?.image_profile : ''}
+						src={header?IMG_API +'/'+ header!.imageProfile : ''}
 						className="w-4/6 rounded-full"
 						alt=""
 					/>
@@ -40,7 +44,7 @@ export const Header = () => {
 						<br />
 					</h1>
 					<div className="body-about">
-                    <div dangerouslySetInnerHTML={{ __html: header?.description }}></div>
+                    <div dangerouslySetInnerHTML={{ __html: header!.description }}></div>
 					</div>
 
 					<div className="flex gap-6 mt-5 static">

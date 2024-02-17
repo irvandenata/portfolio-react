@@ -2,7 +2,7 @@ import {Routes, Route} from 'react-router-dom'
 import './App.css'
 import Home from './pages/home';
 import DetailArticle from './pages/blog/detail-article';
-import {SearchArticle} from './pages/blog/search-article';
+import SearchArticle from './pages/blog/search-article';
 import {AnimatePresence} from 'framer-motion'
 
 const App = ()=> {

@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Transition from "../../components/molecules/Transition";
 import { Footer } from "../../components/organisms/Footer";
 import { Navbar } from "../../components/organisms/Navbar";
@@ -8,6 +8,8 @@ import { genereateImageUrl, getArticleBySlug } from "../../services/home";
 import { toast } from "react-toastify";
 import { convertSnakeToCamel } from "../../functions/convert";
 import { ArticleDetail } from "../../services/data-types";
+import { generateIndonesianDate } from "../../functions/helper";
+import GenerateHTML from "../../components/atoms/GenerateHTML";
 
 const DetailArticle = () => {
     const {slug} = useParams();
@@ -19,7 +21,6 @@ const DetailArticle = () => {
         }else {
 
             const result = convertSnakeToCamel(response.data.data);
-            console.log(result);
             setArticle(result);
         }
     }
@@ -47,8 +48,7 @@ const DetailArticle = () => {
 					>
 						<ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
 							<li className="inline-flex items-center">
-								<a
-									className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary dark:text-gray-400 dark:hover:text-white"
+								<Link to={"/"} className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary dark:text-gray-400 dark:hover:text-white"
 								>
 									<svg
 										className="w-3 h-3 me-2.5"
@@ -60,7 +60,7 @@ const DetailArticle = () => {
 										<path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
 									</svg>
 									Home
-								</a>
+								</Link>
 							</li>
 							<li>
 								<div className="flex items-center">
@@ -79,12 +79,12 @@ const DetailArticle = () => {
 											d="m1 9 4-4-4-4"
 										/>
 									</svg>
-									<a
-										href="#"
-										className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
+									<Link
+										to="/blog"
+										className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white hover:text-primary dark:text-gray-400 "
 									>
 										Article
-									</a>
+									</Link>
 								</div>
 							</li>
 							<li aria-current="page">
@@ -105,7 +105,7 @@ const DetailArticle = () => {
 										/>
 									</svg>
 									<span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-										Rujak Goreng
+                                        {article!.category?.name}
 									</span>
 								</div>
 							</li>
@@ -121,16 +121,13 @@ const DetailArticle = () => {
 				</div>
 				<div className="title mt-10 sm:mt-5 text-left">
 					<h1 className="text-3xl sm:text-lg font-bold">
-						Bukan Berita sembarang berita
+						{article!.title}
 					</h1>
-					<h2 className="text-lg sm:text-lg font-semibold mt-4">Mahmud</h2>
-					<p>Senin, 17 Agustus 1945</p>
+					<h2 className="text-lg sm:text-lg font-semibold mt-4">{article!.source}</h2>
+					<p>{generateIndonesianDate(article!.createdAt)}</p>
 				</div>
 				<div className="body mt-10 mb-10 text-justify">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic voluptate
-					at labore tempora voluptatibus vitae iusto necessitatibus obcaecati?
-					Minima distinctio voluptates nisi cum nesciunt dolorum sed repellendus
-					alias quis modi.
+					<GenerateHTML item={article!.body}/>
 				</div>
 			</div>
 			<Footer />

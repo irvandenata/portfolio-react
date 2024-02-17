@@ -3,9 +3,9 @@ export interface Projects {
 	name: string;
 }
 
-export interface Header {
+export interface HeaderInterface {
 	description: string;
-	image_profile: string;
+	imageProfile: string;
 }
 
 export interface WorkExpItem {
@@ -18,7 +18,7 @@ export interface WorkExpItem {
 	endDate: string;
 }
 
-export interface ArticleItem {
+export interface ArticleItemInterface {
 	body: string;
 	categoryId: string;
 	createdAt: string;
