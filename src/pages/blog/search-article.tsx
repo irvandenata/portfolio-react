@@ -3,35 +3,62 @@ import Transition from "../../components/molecules/Transition";
 import { Footer } from "../../components/organisms/Footer";
 import { Navbar } from "../../components/organisms/Navbar";
 import { ArticleItemInterface } from "../../services/data-types";
+import ArticleCard from "../../components/molecules/ArticleCard";
 import { getArticles, getLatestProjects } from "../../services/home";
 import { toast } from "react-toastify";
 
 const SearchArticle = () => {
 	const urlSearchString = window.location.search;
 	const params = new URLSearchParams(urlSearchString);
-	const [article, setArticle] = useState<ArticleItemInterface[]>([]);
-	const [pagination, setPagination] = useState({
-        currentPage: 1,
+	const [articles, setArticles] = useState<ArticleItemInterface[]>([]);
+    const [pagination, setPagination] = useState({
+        currentPage: params.get("page") ? params.get("page") : 1,
+        lastPage: 1,
         totalPage: 1,
+        nextPage: false,
+        prevPage: false,
     });
+    const [query, setQueries] = useState({
+        category: params.get("category") ? params.get("category") : "",
+        search: params.get("search") ? params.get("search") : "",
+        page: params.get("page") ? params.get("page") : 1,
+        perPage: params.get("perPage") ? params.get("perPage") : 8,
+        last: 1,
+    });
+
 	const getArticlesAPI = useCallback(async () => {
-		const category = params.get("category") ? params.get("category") : "";
+        const category = params.get("category") ? params.get("category") : "";
 		let response;
+        const paramsQuery = `category=${category}&search=${query.search}&page=${query.page}&perPage=${query.perPage}`;
 		if (category == "project") {
-			response = await getLatestProjects();
+			response = await getLatestProjects(paramsQuery);
 		} else {
-			response = await getArticles(category!);
+			response = await getArticles(paramsQuery);
 		}
 		if (response.error) {
 			toast.error(response.message);
 		} else {
-			setArticle(response.data);
+			setArticles(response.data);
+            setPagination({
+                currentPage: response.currentPage,
+                lastPage: response.lastPage,
+                nextPage: response.lastPage!=1 && response.currentPage!=response.lastPage?true:false,
+                prevPage: response.currentPage!=1?true:false,
+                totalPage: response.lastPage,
+            });
+            setQueries({...query, page:response.currentPage, last: response.lastPage});
 		}
-	}, []);
+	}, [setQueries]);
 
 	useEffect(() => {
 		getArticlesAPI();
-	}, []);
+        console.log(pagination);    
+	}, [setQueries]);
+    
+
+    const handlePage = (page: number) => {
+        setQueries({...query, page: page});
+    }
 
 	return (
 		<>
@@ -78,102 +105,82 @@ const SearchArticle = () => {
 							</div>
 						</form>
 					</div>
-					<div className="grid lg:grid-cols-4 sm:grid-cols-1 gap-y-10 gap-x-6 mt-10 ">
-						<div className="max-w-sm bg-background border-2 border-gray rounded-lg hover:border-primary shadow dark:bg-gray-800 dark:border-gray-700 h-[350px] relative  text-left">
-							<a href="/" className="">
-								<img
-									className="rounded-lg p-1"
-									style={{ objectFit: "cover", width: "100%", height: "185px" }}
-									src="https://picsum.photos/id/237/200/300"
-									alt="Article"
+					{articles.length > 0 ? (
+						<div>
+							<div className="grid lg:grid-cols-4 sm:grid-cols-1 gap-y-10 gap-x-6 mt-10 ">
+							{articles.map((article: ArticleItemInterface) => {
+							return (
+								<ArticleCard
+									key={article.id}
+									title={article.title}
+									image={article.image}
+									createdAt={article.createdAt}
+									slug={article.slug}
+									id={article.id}
 								/>
-							</a>
-							<div className="p-5">
-								<a href="/" className="">
-									<h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-										Mantap Memang
-									</h5>
-								</a>
-								<a
-									href="/"
-									className=" absolute bottom-2 left-2 inline-flex items-center p-2 text-sm font-medium bg-gray  text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:bg-primary hover:text-black"
-								>
-									Read more
-								</a>
+							);
+						})}
+							</div>
+							<div
+								className="w-full mt-10 mb-10 flex justify-center"
+								id="pagination"
+							>
+								<nav aria-label="Page navigation example">
+									<ul className="inline-flex -space-x-px text-base h-10">
+										<li>
+											<a
+												href="#"
+												className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+											>
+												Previous
+											</a>
+										</li>
+
+                                        {pagination.totalPage > 1 && pagination.currentPage - 1 != 0 ? (<li >
+											<a
+												
+												className="flex  items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 cursor-pointer  hover:bg-background hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white"
+											>
+												{pagination.currentPage -1 }
+											</a>
+										</li>) : (<></>)}
+    
+										<li >
+											<a
+												
+												className="flex  items-center justify-center px-4 h-10  text-black bg-primary border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+											>
+												{pagination.currentPage}
+											</a>
+										</li>
+
+                                        {pagination.totalPage > 1 && pagination.currentPage + 1 <= pagination.totalPage ? (<li >
+											<a
+												
+												className="flex  items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 cursor-pointer  hover:bg-background hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white"
+											>
+												{pagination.currentPage + 1 }
+											</a>
+										</li>) : (<></>)}
+										<li>
+											<button
+												onClick={() => handlePage(pagination.currentPage??1)}
+												className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+											>
+												Next
+											</button>
+										</li>
+									</ul>
+								</nav>
 							</div>
 						</div>
-					</div>
-					{/* <div className="flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white"> Sorry, we couldn't find any results for this
-            search.</h1>
-        </div> */}
-
-					<div
-						className="w-full mt-10 mb-10 flex justify-center"
-						id="pagination"
-					>
-						<nav aria-label="Page navigation example">
-							<ul className="inline-flex -space-x-px text-base h-10">
-								<li>
-									<a
-										href="#"
-										className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-									>
-										Previous
-									</a>
-								</li>
-								<li>
-									<a
-										href="#"
-										className="flex items-center  justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-									>
-										1
-									</a>
-								</li>
-								<li>
-									<a
-										href="#"
-										className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-									>
-										2
-									</a>
-								</li>
-								<li>
-									<a
-										href="#"
-										aria-current="page"
-										className="flex items-center justify-center px-4 h-10 hover:bg-background text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-									>
-										3
-									</a>
-								</li>
-								<li>
-									<a
-										href="#"
-										className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-									>
-										4
-									</a>
-								</li>
-								<li>
-									<a
-										href="#"
-										className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-									>
-										5
-									</a>
-								</li>
-								<li>
-									<a
-										href="#"
-										className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-									>
-										Next
-									</a>
-								</li>
-							</ul>
-						</nav>
-					</div>
+					) : (
+						<div className="flex flex-col items-center justify-center">
+							<h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+								Sorry, we couldn't find any results for this search.
+							</h1>
+						</div>
+					)}
 				</div>
 			</div>
 			<Footer />

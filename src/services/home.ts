@@ -38,8 +38,10 @@ export async function getHeader() {
     });
   }
 
-  export async function getLatestProjects() {
-    const url = `${ROOT_API}/${API_VERSION}/get-projects`;
+  export async function getLatestProjects(
+
+    params:string ='',) {
+    const url = `${ROOT_API}/${API_VERSION}/get-projects?${params}`;
     const response = await callAPI({
         url,
         method: 'GET',
@@ -50,9 +52,8 @@ export async function getHeader() {
 
   export async function getArticles(
 
-    category:string ='',) {
-    const categoryUrl = category ? `category=${category}` : '';
-    const url = `${ROOT_API}/${API_VERSION}/get-articles?${categoryUrl}`;
+    params:string ='',) {
+    const url = `${ROOT_API}/${API_VERSION}/get-articles?${params}`;
     const response = await callAPI({
         url,
         method: 'GET',
