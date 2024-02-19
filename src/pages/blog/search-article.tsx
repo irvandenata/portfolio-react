@@ -11,8 +11,9 @@ const SearchArticle = () => {
 	const urlSearchString = window.location.search;
 	const params = new URLSearchParams(urlSearchString);
 	const [articles, setArticles] = useState<ArticleItemInterface[]>([]);
+    const [loading, setLoading] = useState(true);
     const [pagination, setPagination] = useState({
-        currentPage: params.get("page") ? params.get("page") : 1,
+        currentPage: params.get("page") ? parseInt(params.get("page")!) : 1,
         lastPage: 1,
         totalPage: 1,
         nextPage: false,
@@ -47,24 +48,27 @@ const SearchArticle = () => {
                 totalPage: response.lastPage,
             });
             setQueries({...query, page:response.currentPage, last: response.lastPage});
+            setLoading(false);
 		}
-	}, [setQueries]);
+	}, []);
+    const handlePage = (page: number) => {
+        setQueries({...query, page: page});
+        params.set("page", page.toString());
+    }
 
 	useEffect(() => {
 		getArticlesAPI();
-        console.log(pagination);    
-	}, [setQueries]);
+        console.log('query', query);
+	}, []);
     
 
-    const handlePage = (page: number) => {
-        setQueries({...query, page: page});
-    }
+   
 
 	return (
 		<>
 			<Navbar />
 			<div>
-				<div className=" snap-none container min-h-screen mx-auto justify-center items-center">
+				<div className=" snap-none container mx-auto justify-center items-center">
 					<div className="w-full">
 						<form className="static mt-32" action="/">
 							<label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray">
@@ -105,7 +109,7 @@ const SearchArticle = () => {
 							</div>
 						</form>
 					</div>
-					{articles.length > 0 ? (
+                    {!loading ? articles.length > 0 ? (
 						<div>
 							<div className="grid lg:grid-cols-4 sm:grid-cols-1 gap-y-10 gap-x-6 mt-10 ">
 							{articles.map((article: ArticleItemInterface) => {
@@ -164,7 +168,7 @@ const SearchArticle = () => {
 										</li>) : (<></>)}
 										<li>
 											<button
-												onClick={() => handlePage(pagination.currentPage??1)}
+												onClick={() => handlePage(pagination.currentPage+1)}
 												className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
 											>
 												Next
@@ -180,7 +184,14 @@ const SearchArticle = () => {
 								Sorry, we couldn't find any results for this search.
 							</h1>
 						</div>
-					)}
+					)
+                     : (
+                        <div className="flex flex-col h-[60vh] items-center justify-center">
+                            <h1 className="text-2xl my-auto font-bold text-gray-900 dark:text-white">
+                                <img src="/img/loading.gif" alt="loading" />
+                            </h1>
+                        </div>
+                    )}
 				</div>
 			</div>
 			<Footer />

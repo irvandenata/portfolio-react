@@ -27,7 +27,7 @@ export const Project = () => {
 						The project <span className="text-primary">I'm working on</span>
 					</h1>
 					<Link
-						to="/blog"
+						to="/blog?category=project"
 						className="inline-flex items-center text-lg sm:text-sm font-bold hover:bg-background lg:mt-0 sm:mt-6 lg:p-2 rounded-lg  text-center text-black bg-blue-700 "
 					>
 						See More Projects
