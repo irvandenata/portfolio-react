@@ -48,18 +48,24 @@ const SearchArticle = () => {
                 totalPage: response.lastPage,
             });
             setQueries({...query, page:response.currentPage, last: response.lastPage});
-            setLoading(false);
+            console.log('GET ARTICLES', response.data);
 		}
-	}, []);
+	}, [query]);
     const handlePage = (page: number) => {
+        setLoading(true);
+       
         setQueries({...query, page: page});
         params.set("page", page.toString());
+        console.log('params', params.toString());
+        window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
     }
 
 	useEffect(() => {
-		getArticlesAPI();
-        console.log('query', query);
-	}, []);
+        getArticlesAPI();
+        setTimeout(() => {
+            setLoading(false);
+        }, 600);
+	}, [loading]);
     
 
    
@@ -132,12 +138,13 @@ const SearchArticle = () => {
 								<nav aria-label="Page navigation example">
 									<ul className="inline-flex -space-x-px text-base h-10">
 										<li>
-											<a
-												href="#"
-												className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+											<button
+                                                 disabled={pagination.currentPage == 1}
+												onClick={() => handlePage(pagination.currentPage-1)}
+												className={"flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 border border-e-0 border-gray-300 rounded-s-lg hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"+(pagination.currentPage == 1 ? " cursor-not-allowed bg-background" : "")}
 											>
 												Previous
-											</a>
+											</button>
 										</li>
 
                                         {pagination.totalPage > 1 && pagination.currentPage - 1 != 0 ? (<li >
@@ -168,8 +175,9 @@ const SearchArticle = () => {
 										</li>) : (<></>)}
 										<li>
 											<button
+                                                disabled={pagination.currentPage == pagination.lastPage}
 												onClick={() => handlePage(pagination.currentPage+1)}
-												className="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                            className={"flex items-center justify-center px-4 h-10 leading-tight text-gray-500  border border-gray-300 rounded-e-lg hover:bg-background hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"+(pagination.currentPage == pagination.lastPage ? " cursor-not-allowed bg-background" : "")}
 											>
 												Next
 											</button>
