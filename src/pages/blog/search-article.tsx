@@ -187,7 +187,7 @@ const SearchArticle = () => {
 							</div>
 						</div>
 					) : (
-						<div className="flex flex-col items-center justify-center">
+						<div className="flex flex-col items-center justify-center h-[70vh]">
 							<h1 className="text-2xl font-bold text-gray-900 dark:text-white">
 								Sorry, we couldn't find any results for this search.
 							</h1>
