@@ -52,16 +52,16 @@ export const Navbar = () => {
 							</button>
 						</div>
 						<div className="hidden lg:flex lg:gap-x-12">
-							<Link to="/detail" className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
+							<Link to="/#about-me" className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
 								About Me
 							</Link>
-							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
+							<Link to='/#tech-stack' className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
 								Tech Stack
-							</a>
+							</Link>
 							<a className="text-sm font-light cursor-pointer  px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
 								Work Experieces
 							</a>
-							<a className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
+							<a href="#tech-stack" className="text-sm font-light cursor-pointer px-1 leading-6 text-gray-900 hover:bg-primary hover:text-white hover:rounded hover:scale-110 hover:px-1">
 								Projects
 							</a>
 

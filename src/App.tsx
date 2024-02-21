@@ -8,7 +8,7 @@ import {AnimatePresence} from 'framer-motion'
 const App = ()=> {
 
   return (
-        <>
+        <div className=''>
         <AnimatePresence mode="wait">
             <Routes>
                 <Route index  element={<Home />}  />
@@ -16,7 +16,7 @@ const App = ()=> {
                 <Route path="/blog/:slug" element={<DetailArticle />} />
             </Routes>
         </AnimatePresence>
-        </>
+        </div>
   )
 }
 

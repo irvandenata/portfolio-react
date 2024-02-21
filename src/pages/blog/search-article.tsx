@@ -60,6 +60,16 @@ const SearchArticle = () => {
         window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
     }
 
+    const handleSearch = (e: any) => {
+        e.preventDefault();
+        setLoading(true);
+        const search = e.target.search.value;
+        setQueries({...query, search: search, page: 1});
+        params.set("search", search);
+        params.set("page", "1");
+        window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+    }
+
 	useEffect(() => {
         getArticlesAPI();
         setTimeout(() => {
@@ -76,11 +86,11 @@ const SearchArticle = () => {
 			<div>
 				<div className=" snap-none container mx-auto justify-center items-center">
 					<div className="w-full">
-						<form className="static mt-32" action="/">
+						<form className="static mt-32" action="#" method="POST" onSubmit={handleSearch}>
 							<label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray">
 								Search
 							</label>
-							<div className="relative -z-10">
+							<div className="relative -z-1">
 								<div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
 									<svg
 										className="w-4 h-4 text-gray dark:text-gray-400"
@@ -104,7 +114,7 @@ const SearchArticle = () => {
 									name="search"
 									className="block w-full p-4 ps-10 text-sm text-gray-900 border-2 border-gray  rounded-lg bg-gray-50  focus:border-primary focus:border-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-primary"
 									placeholder="Search Name, Location ..."
-									required
+									
 								/>
 								<button
 									type="submit"
